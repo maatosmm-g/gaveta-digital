@@ -22,13 +22,10 @@ export const AddNotebookForm: React.FC<AddNotebookFormProps> = ({ onSuccess }) =
     setError(null);
 
     try {
-      // Truncate snippet for storage to stay within Firestore limits
       const storageSnippet = codeSnippet.substring(0, 50000);
-
-      // Analyze with Gemini
       const analysis = await analyzeNotebookCode(storageSnippet || `Notebook URL: ${driveUrl}`);
 
-      // Save to Firestore (sem userId)
+      // SEM userId!
       const notebookData = {
         driveUrl,
         contentSnippet: storageSnippet,
@@ -77,22 +74,20 @@ export const AddNotebookForm: React.FC<AddNotebookFormProps> = ({ onSuccess }) =
         </div>
 
         <div>
-          <label className="block text-[10px] uppercase tracking-widest font-bold opacity-50 mb-2">Trecho de Código (Opcional para análise mais precisa)</label>
+          <label className="block text-[10px] uppercase tracking-widest font-bold opacity-50 mb-2">Trecho de Código (Opcional)</label>
           <div className="relative">
             <Code size={16} className="absolute left-3 top-3 opacity-30" />
             <textarea 
               value={codeSnippet}
               onChange={(e) => setCodeSnippet(e.target.value)}
-              placeholder="Cole aqui a parte principal do seu código ou descrição do que o notebook faz..."
+              placeholder="Cole aqui a parte principal do seu código..."
               rows={4}
               className="w-full bg-[#F5F5F0] border-none p-3 pl-10 focus:ring-1 focus:ring-[#1a1a1a] outline-none rounded-sm text-sm resize-none"
             />
           </div>
         </div>
 
-        {error && (
-          <p className="text-red-500 text-xs italic">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-xs italic">{error}</p>}
 
         <button 
           type="submit"
