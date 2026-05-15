@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import React, { useState } from 'react';
 import { ExternalLink, Tag, Calendar, Trash2, Globe, Lock, BarChart2, X, History, MousePointer2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
