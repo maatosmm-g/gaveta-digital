@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Firebase Auth</title>
+</head>
+<body>
+    <h1>Teste de Autenticação Firebase</h1>
+    <button id="loginBtn">Login com Google</button>
+    <div id="status"></div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+
+        // COLE AQUI SUAS CONFIGURAÇÕES DO FIREBASE
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "gaveta-digital.firebaseapp.com",
+            projectId: "gaveta-digital",
+            storageBucket: "gaveta-digital.firebasestorage.app",
+            messagingSenderId: "SEU_SENDER_ID",
+            appId: "SEU_APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        document.getElementById('loginBtn').onclick = () => {
+            signInWithRedirect(auth, provider);
+        };
+
+        getRedirectResult(auth).then((result) => {
+            if (result) {
+                document.getElementById('status').innerHTML = `✅ Logado: ${result.user.email}`;
+            }
+        }).catch((error) => {
+            document.getElementById('status').innerHTML = `❌ Erro: ${error.message}`;
+        });
+    </script>
+</body>
+</html>
+{
+  "apiKey": "SUA_API_KEY",
+  "authDomain": "seu-projeto.firebaseapp.com",
+  "projectId": "seu-projeto",
+  "storageBucket": "seu-projeto.appspot.com",
+  "messagingSenderId": "123456789",
+  "appId": "1:123456789:web:abcdef",
+  "firestoreDatabaseId": "(default)"
+}
